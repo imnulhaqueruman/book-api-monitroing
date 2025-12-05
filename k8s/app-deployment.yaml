@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: book-api
+  namespace: book-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: book-api
+  template:
+    metadata:
+      labels:
+        app: book-api
+    spec:
+      containers:
+      - name: book-api
+        image: u1809014/book-api-test:v1.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: book-api-config
+              key: DB_HOST
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: book-api-config
+              key: DB_PORT
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: book-api-secret
+              key: DB_USER
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: book-api-secret
+              key: DB_PASSWORD
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: book-api-config
+              key: DB_NAME
+        - name: PORT
+          valueFrom:
+            configMapKeyRef:
+              name: book-api-config
+              key: APP_PORT
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
