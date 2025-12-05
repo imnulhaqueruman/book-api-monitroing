@@ -7,4 +7,4 @@ data:
   DB_HOST: "postgres-service"
   DB_PORT: "5432"
   DB_NAME: "bookdb"
-  APP_PORT: "8080"
+  APP_PORT: "5000"

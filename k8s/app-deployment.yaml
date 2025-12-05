@@ -15,10 +15,10 @@ spec:
     spec:
       containers:
       - name: book-api
-        image: u1809014/book-api-test:v1.0
+        image: u1809014/book-api-test:v1.2
         imagePullPolicy: Always
         ports:
-        - containerPort: 8080
+        - containerPort: 5000
         env:
         - name: DB_HOST
           valueFrom:
@@ -46,10 +46,7 @@ spec:
               name: book-api-config
               key: DB_NAME
         - name: PORT
-          valueFrom:
-            configMapKeyRef:
-              name: book-api-config
-              key: APP_PORT
+          value: "5000"
         resources:
           requests:
             memory: "128Mi"
